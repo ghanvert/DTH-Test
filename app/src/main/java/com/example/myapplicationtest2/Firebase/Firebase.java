@@ -19,6 +19,7 @@ public class Firebase extends AppCompatActivity {
         analytics = FirebaseAnalytics.getInstance(this);
         Bundle bundle = new Bundle();
         bundle.putString("message", "Integración de Firebase completa...");
+        bundle.putString("message", "Otro mensaje.");
         analytics.logEvent("InitScreen", bundle);
     }
 }
