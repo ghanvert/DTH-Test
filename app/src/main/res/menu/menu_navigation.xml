@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/inicio"
+        android:title="@string/inicio"
+        android:icon="@drawable/inicio_selector"/>
+    <item
+        android:id="@+id/compras"
+        android:title="@string/compras"
+        android:icon="@drawable/compras_selector"/>
+    <item
+        android:id="@+id/cuenta"
+        android:title="@string/cuenta"
+        android:icon="@drawable/cuenta_selector"/>
+
+</menu>
