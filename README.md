@@ -29,7 +29,7 @@ __PROGRESO__
 * ![progress3](https://progress-bar.dev/100) Productos
 * ![progress5](https://progress-bar.dev/98) App administración
 * ![progress4](https://progress-bar.dev/70) Pedidos
-* ![progress1](https://progress-bar.dev/30) Integración servidor con Firebase
+* Integración servidor con Firebase (CANCELADO).
 * ![progress6](https://progress-bar.dev/10) Otros sistemas secundarios (extras)  
 
 
