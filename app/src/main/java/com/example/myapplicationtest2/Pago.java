@@ -1,5 +1,4 @@
 package com.example.myapplicationtest2;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -7,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -34,7 +32,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.Executor;
 
 public class Pago extends AppCompatActivity {
 
@@ -45,21 +42,22 @@ public class Pago extends AppCompatActivity {
     String token, amount;
     HashMap<String, String> paramsHash;
 
-    Button btn_pay;
-    EditText edt_amount;
+    Button pagar;
+    ProgressDialog _mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
-        btn_pay = findViewById(R.id.payment);
-        edt_amount = findViewById(R.id.amount);
-        
+        amount = Datos_Producto.precio;
+        pagar = findViewById(R.id.pagar);
+
+        pagar.setText(amount);
+
         new getToken().execute();
 
-        // Event
-        btn_pay.setOnClickListener(new View.OnClickListener() {
+        pagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 submitPayment();
@@ -78,11 +76,13 @@ public class Pago extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
+                assert data != null;
                 DropInResult result = data.getParcelableExtra(DropInResult.EXTRA_DROP_IN_RESULT);
                 PaymentMethodNonce nonce = result.getPaymentMethodNonce();
+                assert nonce != null;
                 String strNonce = nonce.getNonce();
-                if (!edt_amount.getText().toString().isEmpty()) {
-                    amount = edt_amount.getText().toString();
+                if (!amount.equalsIgnoreCase("")) {
+                    amount = String.valueOf(Datos_Producto.precio_total);
                     paramsHash = new HashMap<>();
                     paramsHash.put("amount", amount);
                     paramsHash.put("nonce", strNonce);
@@ -93,6 +93,7 @@ public class Pago extends AppCompatActivity {
             } else if (resultCode == RESULT_CANCELED){
                 Toast.makeText(this, "User Cancel", Toast.LENGTH_SHORT).show();
             } else {
+                assert data != null;
                 Exception error = (Exception)data.getSerializableExtra(DropInActivity.EXTRA_ERROR);
                 Log.d("EDMT_ERROR", error.toString());
             }
@@ -199,10 +200,16 @@ public class Pago extends AppCompatActivity {
         }
 
         @Override
-        protected void onPreExecute() {}
+        protected void onPreExecute() {
+            _mDialog = new ProgressDialog(Pago.this, android.R.style.Theme_DeviceDefault_Dialog);
+            _mDialog.setCancelable(false);
+            _mDialog.setMessage("Enviando su pedido");
+            _mDialog.show();
+        }
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            _mDialog.dismiss();
             startActivity(new Intent(getApplicationContext(), Ventana_principal.class));
         }
 
@@ -216,7 +223,7 @@ public class Pago extends AppCompatActivity {
         protected void onPreExecute() {
             mDialog = new ProgressDialog(Pago.this, android.R.style.Theme_DeviceDefault_Dialog);
             mDialog.setCancelable(false);
-            mDialog.setMessage("Please wait");
+            mDialog.setMessage("Cargando servicio de pago");
             mDialog.show();
         }
 

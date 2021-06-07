@@ -24,7 +24,7 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/product_image"
+                android:id="@+id/product_image_pedido"
                 android:layout_width="124dp"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
@@ -37,7 +37,7 @@
                 design:srcCompat="@drawable/hamburguesa" />
 
             <TextView
-                android:id="@+id/product_name"
+                android:id="@+id/product_name_pedido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -45,38 +45,41 @@
                 android:text="Hamburguesa Clásica"
                 android:textSize="20dp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/product_image"
+                app:layout_constraintStart_toEndOf="@+id/product_image_pedido"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/product_text_price"
+                android:id="@+id/product_text_price_pedido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:text="3500 CLP"
-                app:layout_constraintStart_toEndOf="@+id/product_image"
-                app:layout_constraintTop_toBottomOf="@+id/product_name" />
-
-            <ImageView
-                android:id="@+id/oferta"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                design:srcCompat="@drawable/oferta" />
+                app:layout_constraintStart_toEndOf="@+id/product_image_pedido"
+                app:layout_constraintTop_toBottomOf="@+id/product_name_pedido" />
 
             <TextView
-                android:id="@+id/id_producto"
+                android:id="@+id/id_producto_pedido"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="27dp"
                 android:layout_marginEnd="12dp"
-                android:layout_marginRight="12dp"
                 android:text="id_producto"
                 android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/oferta" />
+                app:layout_constraintTop_toBottomOf="@+id/product_name_pedido" />
+
+            <TextView
+                android:id="@+id/aprobado_pedido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="52dp"
+                android:layout_marginTop="20dp"
+                android:text="EN ESPERA"
+                android:textStyle="bold"
+                android:textSize="25dp"
+                app:layout_constraintStart_toEndOf="@+id/product_image_pedido"
+                app:layout_constraintTop_toBottomOf="@+id/product_text_price_pedido" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -52,13 +52,6 @@ public class RealizarPedido extends AppCompatActivity {
         pedir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new Tasks().execute();
-            }
-        });
-
-        btnPagar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 Datos_Producto.precio = precio.getText().toString();
                 Datos_Producto.cantidad = Integer.parseInt(cantidad.getText().toString());
                 Datos_Producto.precio_total = _precio_total;
@@ -67,6 +60,13 @@ public class RealizarPedido extends AppCompatActivity {
                 Datos_Producto.nombre_persona_recibe = nombre.getText().toString();
                 Datos_Producto.domicilio_entrega = domicilio_entrega.getText().toString();
                 startActivity(new Intent(getApplicationContext(), Pago.class));
+            }
+        });
+
+        btnPagar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
