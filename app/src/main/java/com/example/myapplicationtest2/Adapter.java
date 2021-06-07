@@ -51,7 +51,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = layoutInflater.inflate(R.layout.custom_card_view, viewGroup, false);
         return new ViewHolder(view);
-        // Añadido un comentario.
+        // Añadido un comentario
     }
 
     @Override

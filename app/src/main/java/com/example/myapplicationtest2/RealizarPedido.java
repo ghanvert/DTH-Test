@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -19,6 +21,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class RealizarPedido extends AppCompatActivity {
 
@@ -55,6 +59,13 @@ public class RealizarPedido extends AppCompatActivity {
         btnPagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Datos_Producto.precio = precio.getText().toString();
+                Datos_Producto.cantidad = Integer.parseInt(cantidad.getText().toString());
+                Datos_Producto.precio_total = _precio_total;
+                Datos_Producto.telefono = telefono.getText().toString();
+                Datos_Producto.nombre_producto = nombre_producto.getText().toString();
+                Datos_Producto.nombre_persona_recibe = nombre.getText().toString();
+                Datos_Producto.domicilio_entrega = domicilio_entrega.getText().toString();
                 startActivity(new Intent(getApplicationContext(), Pago.class));
             }
         });
@@ -86,6 +97,33 @@ public class RealizarPedido extends AppCompatActivity {
         getStrings();
         setStringsInApp();
 
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        try {
+                            //Ejecuta tu AsyncTask!
+                            AsyncTask myTask = new AsyncTask() {
+                                @Override
+                                protected Object doInBackground(Object[] objects) {
+                                    Log.e("PIXULA", "ajsodasdjkasd");
+                                    return null;
+                                }
+                            };
+                            myTask.execute();
+                        } catch (Exception e) {
+                            Log.e("error", e.getMessage());
+                        }
+                    }
+                });
+            }
+        };
+
+        timer.schedule(task, 0, 500);  //ejecutar en intervalo de 3 segundos.
     }
 
     public void getStrings() {
