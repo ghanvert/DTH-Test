@@ -22,7 +22,6 @@ de una forma segura.
 
 ![firebase](https://www.gstatic.com/devrel-devsite/prod/vacc2a2a4a4394c7c42dc62dba69eb022d7680ce4a368d4b28c3e984cc9155a81/firebase/images/touchicon-180.png)
 ![androidstudio](https://media.trustradius.com/product-logos/H1/0L/UGJ39PDHNUZT-180x180.PNG) 
-![paypal](https://lh3.googleusercontent.com/proxy/D0tayQovOGew8VlBxl32TiyBvVBAttURVqbqsESD3sZswZr4JyuVSpyzWqFv-0v_4YYg6qESkCVtKQBwEfYrmH_6BBnpDn8bLdEU5xMPm9BIuO8xjU9kuO0jp7pekLUv6GmfsFnI)  
 
 __PROGRESO__  
 * ![progress2](https://progress-bar.dev/100) Integración métodos de pago
