@@ -81,6 +81,17 @@
                 app:layout_constraintStart_toEndOf="@+id/product_image_pedido"
                 app:layout_constraintTop_toBottomOf="@+id/product_text_price_pedido" />
 
+            <TextView
+                android:id="@+id/idPedido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="11dp"
+                android:text="TextView"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/id_producto_pedido" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

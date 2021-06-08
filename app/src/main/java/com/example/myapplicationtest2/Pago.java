@@ -50,10 +50,10 @@ public class Pago extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
-        amount = Datos_Producto.precio;
+        amount = String.valueOf(Datos_Producto.precio_total);
         pagar = findViewById(R.id.pagar);
 
-        pagar.setText(amount);
+        pagar.setText(amount + " USD");
 
         new getToken().execute();
 
@@ -148,7 +148,7 @@ public class Pago extends AppCompatActivity {
     public void MandarPedido(Connection cn) throws SQLException, NoSuchAlgorithmException {
 
         int id_producto, precio_producto, cantidad, precio_total, telefono;
-        String pedido, nombre_producto, usuario_email, nombre_persona_recibe, domicilio_entrega;
+        String pedido, nombre_producto, usuario_email, nombre_persona_recibe, domicilio_entrega, image;
 
         usuario_email = Datos_Usuario.email;
         id_producto = Datos_Producto.id_producto;
@@ -163,13 +163,14 @@ public class Pago extends AppCompatActivity {
         nombre_producto = Datos_Producto.nombre_producto;
         nombre_persona_recibe = Datos_Producto.nombre_persona_recibe;
         domicilio_entrega = Datos_Producto.domicilio_entrega;
+        image = Datos_Producto.image_file_name;
 
         Pedido _pedido = new Pedido(usuario_email, id_producto, cantidad, precio_total);
         pedido = _pedido.getText();
 
         String table = "pedidos";
         String datos = " (id_pedido, id_producto, nombre_producto, usuario_email, nombre_persona_recibe, precio_producto, cantidad, precio_total, domicilio_entrega, telefono)";
-        PreparedStatement pst = cn.prepareStatement("INSERT INTO `I6U9yGtbl0`.`pedidos` (`pedido`, `id_producto`, `nombre_producto`, `usuario_email`, `nombre_persona_recibe`, `precio_producto`, `cantidad`, `precio_total`, `domicilio_entrega`, `telefono`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+        PreparedStatement pst = cn.prepareStatement("INSERT INTO `I6U9yGtbl0`.`pedidos` (`pedido`, `id_producto`, `nombre_producto`, `usuario_email`, `nombre_persona_recibe`, `precio_producto`, `cantidad`, `precio_total`, `domicilio_entrega`, `telefono`, `imageFile`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
         pst.setString(1, pedido);
         pst.setInt(2, id_producto);
         pst.setString(3, nombre_producto);
@@ -180,6 +181,7 @@ public class Pago extends AppCompatActivity {
         pst.setInt(8, precio_total);
         pst.setString(9, domicilio_entrega);
         pst.setInt(10, telefono);
+        pst.setString(11, image);
 
         pst.executeUpdate();
 

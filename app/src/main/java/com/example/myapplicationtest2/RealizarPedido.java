@@ -30,7 +30,7 @@ public class RealizarPedido extends AppCompatActivity {
     private EditText nombre, domicilio_entrega, telefono, cantidad;
     private ImageView image;
     private static int _precio_total = 0;
-    private Button pedir, btnPagar;
+    private Button pedir;
     private static String _precio;
 
     @Override
@@ -47,7 +47,6 @@ public class RealizarPedido extends AppCompatActivity {
         this.cantidad = findViewById(R.id.cantidad);
         this.total = findViewById(R.id.total);
         this.pedir = findViewById(R.id.button_pedir);
-        this.btnPagar = findViewById(R.id.btnPagar);
 
         pedir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,13 +59,6 @@ public class RealizarPedido extends AppCompatActivity {
                 Datos_Producto.nombre_persona_recibe = nombre.getText().toString();
                 Datos_Producto.domicilio_entrega = domicilio_entrega.getText().toString();
                 startActivity(new Intent(getApplicationContext(), Pago.class));
-            }
-        });
-
-        btnPagar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
 
@@ -97,33 +89,6 @@ public class RealizarPedido extends AppCompatActivity {
         getStrings();
         setStringsInApp();
 
-        final Handler handler = new Handler();
-        Timer timer = new Timer();
-
-        TimerTask task = new TimerTask() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    public void run() {
-                        try {
-                            //Ejecuta tu AsyncTask!
-                            AsyncTask myTask = new AsyncTask() {
-                                @Override
-                                protected Object doInBackground(Object[] objects) {
-                                    Log.e("PIXULA", "ajsodasdjkasd");
-                                    return null;
-                                }
-                            };
-                            myTask.execute();
-                        } catch (Exception e) {
-                            Log.e("error", e.getMessage());
-                        }
-                    }
-                });
-            }
-        };
-
-        timer.schedule(task, 0, 500);  //ejecutar en intervalo de 3 segundos.
     }
 
     public void getStrings() {
@@ -141,25 +106,27 @@ public class RealizarPedido extends AppCompatActivity {
     public void MandarPedido(Connection cn) throws SQLException, NoSuchAlgorithmException {
 
         int id_producto, precio_producto, cantidad, precio_total, telefono;
-        String pedido, nombre_producto, usuario_email, nombre_persona_recibe, domicilio_entrega;
+        String pedido, nombre_producto, usuario_email, nombre_persona_recibe, domicilio_entrega, imageFile;
 
         usuario_email = Datos_Usuario.email;
         id_producto = Datos_Producto.id_producto;
         cantidad = Integer.parseInt(this.cantidad.getText().toString());
         precio_total = _precio_total;
+        Datos_Producto.precio_total = precio_total;
 
         precio_producto = Integer.parseInt(_precio);
         telefono = Integer.parseInt(this.telefono.getText().toString());
         nombre_producto = this.nombre_producto.getText().toString();
         nombre_persona_recibe = this.nombre.getText().toString();
         domicilio_entrega = this.domicilio_entrega.getText().toString();
+        imageFile = Datos_Producto.image_file_name;
 
         Pedido _pedido = new Pedido(usuario_email, id_producto, cantidad, precio_total);
         pedido = _pedido.getText();
 
         String table = "pedidos";
         String datos = " (id_pedido, id_producto, nombre_producto, usuario_email, nombre_persona_recibe, precio_producto, cantidad, precio_total, domicilio_entrega, telefono)";
-        PreparedStatement pst = cn.prepareStatement("INSERT INTO `I6U9yGtbl0`.`pedidos` (`pedido`, `id_producto`, `nombre_producto`, `usuario_email`, `nombre_persona_recibe`, `precio_producto`, `cantidad`, `precio_total`, `domicilio_entrega`, `telefono`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
+        PreparedStatement pst = cn.prepareStatement("INSERT INTO `I6U9yGtbl0`.`pedidos` (`pedido`, `id_producto`, `nombre_producto`, `usuario_email`, `nombre_persona_recibe`, `precio_producto`, `cantidad`, `precio_total`, `domicilio_entrega`, `telefono`, `imageFile`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
         pst.setString(1, pedido);
         pst.setInt(2, id_producto);
         pst.setString(3, nombre_producto);
@@ -170,6 +137,7 @@ public class RealizarPedido extends AppCompatActivity {
         pst.setInt(8, precio_total);
         pst.setString(9, domicilio_entrega);
         pst.setInt(10, telefono);
+        pst.setString(11, imageFile);
 
         pst.executeUpdate();
 

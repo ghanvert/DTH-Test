@@ -1,9 +1,9 @@
 package com.example.myapplicationtest2;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,17 +18,16 @@ import java.util.List;
 
 public class AdapterRegistroPedidos extends RecyclerView.Adapter<AdapterRegistroPedidos.ViewHolder> {
 
-    private Context context;
-    private LayoutInflater layoutInflater;
-    private List<String> data;
-    private List<Integer> id_producto;
-    private List<String> priceData;
-    private List<String> imageFile;
-    private List<Integer> aprobado;
+    private final Context context;
+    private final LayoutInflater layoutInflater;
+    private final List<String> data;
+    private final List<Integer> id_producto;
+    private final List<String> priceData;
+    private final List<String> imageFile;
+    private final List<Integer> aprobado;
+    private final List<String> idPedido;
 
-    Ventana_principal ventana_principal;
-
-    AdapterRegistroPedidos(Context context, List<Integer> id_producto, List<String> data, List<String> priceData, List<Integer> aprobado, List<String> fileResource) {;
+    AdapterRegistroPedidos(Context context, List<Integer> id_producto, List<String> data, List<String> priceData, List<Integer> aprobado, List<String> fileResource, List<String> idPedido) {
         this.layoutInflater = LayoutInflater.from(context);
         this.id_producto = id_producto;
         this.data = data;
@@ -36,6 +35,7 @@ public class AdapterRegistroPedidos extends RecyclerView.Adapter<AdapterRegistro
         this.context = context;
         this.aprobado = aprobado;
         this.imageFile = fileResource;
+        this.idPedido = idPedido;
     }
 
     @NonNull
@@ -43,7 +43,6 @@ public class AdapterRegistroPedidos extends RecyclerView.Adapter<AdapterRegistro
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = layoutInflater.inflate(R.layout.custom_card_view2, viewGroup, false);
         return new ViewHolder(view);
-        // Añadido un comentario
     }
 
     @Override
@@ -54,16 +53,23 @@ public class AdapterRegistroPedidos extends RecyclerView.Adapter<AdapterRegistro
         String description = priceData.get(i);
         String image = imageFile.get(i);
         int aprobado = this.aprobado.get(i);
+        String idPedido = this.idPedido.get(i);
         viewHolder.textTitle.setText(title);
-        viewHolder.textDescription.setText(description);
+        viewHolder.textDescription.setText(description + " USD");
+        viewHolder.idPedido.setText(idPedido);
+        viewHolder.idProducto.setText(String.valueOf(idProducto));
         Uri path = Uri.parse("android.resource://" + BuildConfig.APPLICATION_ID + "/drawable/" + image);
 
         viewHolder.imageFile.setImageURI(path);
 
+        Log.e("VALOR", String.valueOf(aprobado));
         if (aprobado == 1) {
+            Log.d("ENTRANDO", "HOLAAA");
             viewHolder.aprobado.setText("EN CAMINO");
             viewHolder.aprobado.setTextColor(Color.GREEN);
         } else {
+            Log.d("ENTRANDO", "HOLUU");
+            viewHolder.aprobado.setText("EN ESPERA");
             viewHolder.aprobado.setTextColor(Color.RED);
         }
 
@@ -76,7 +82,7 @@ public class AdapterRegistroPedidos extends RecyclerView.Adapter<AdapterRegistro
 
     protected static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView idProducto, textTitle, textDescription, aprobado;
+        TextView idProducto, textTitle, textDescription, aprobado, idPedido;
         ImageView imageFile;
         CardView cardview;
 
@@ -88,6 +94,7 @@ public class AdapterRegistroPedidos extends RecyclerView.Adapter<AdapterRegistro
             imageFile = itemView.findViewById(R.id.product_image_pedido);
             aprobado = itemView.findViewById(R.id.aprobado_pedido);
             cardview = itemView.findViewById(R.id.cardView2);
+            idPedido = itemView.findViewById(R.id.idPedido);
         }
     }
 

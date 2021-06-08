@@ -13,6 +13,7 @@ public class Datos_Producto {
     public static int cantidad = 0;
     public static int precio_total = 0;
     public static Uri image_file = null;
+    public static String image_file_name = "";
     public static String nombre_persona_recibe = "";
 
 }

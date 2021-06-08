@@ -1,5 +1,6 @@
 package com.example.myapplicationtest2;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +27,8 @@ public class Registro extends AppCompatActivity {
     static String _email, _password, _confirmar_password;
 
     public boolean connection_state;
+
+    ProgressDialog mDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,6 +76,7 @@ public class Registro extends AppCompatActivity {
                 pst.setString(3, nombre_persona.getText().toString());
                 pst.executeUpdate();
 
+                Datos_Usuario.email = _email;
                 Intent next = new Intent(Registro.this, Ventana_principal.class);
                 startActivity(next);
             } else {
@@ -101,16 +105,15 @@ public class Registro extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            //loadingDialog.startLoadingDialog();
+            mDialog = new ProgressDialog(Registro.this, android.R.style.Theme_DeviceDefault_Dialog);
+            mDialog.setCancelable(false);
+            mDialog.setMessage("Registrandose...");
+            mDialog.show();
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            //loadingDialog.dismissDialog();
-            if (connection_state) {
-                //ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.acti);
-                //displayMessage(layout,"Email y/o contraseña incorrectos.");
-            }
+            mDialog.dismiss();
         }
 
     }

@@ -68,7 +68,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
                 Datos_Producto.image_file = path;
                 Datos_Producto.nombre_producto = title;
                 Datos_Producto.precio = description;
-
+                Datos_Producto.image_file_name = image;
             }
         });
 

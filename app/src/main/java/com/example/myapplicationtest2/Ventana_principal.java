@@ -115,7 +115,7 @@ public class Ventana_principal extends AppCompatActivity {
         while (rs.next()) {
             items.add(rs.getString("nombreProducto"));
             id_producto.add(rs.getInt("idproducto"));
-            price_item.add(rs.getString("precio") + " CLP");
+            price_item.add(rs.getString("precio") + " USD");
             oferta_item.add(rs.getInt("oferta"));
             image.add(rs.getString("imageFile"));
         }
@@ -124,7 +124,7 @@ public class Ventana_principal extends AppCompatActivity {
         while (rs2.next()) {
             items.add(rs2.getString("nombreProducto"));
             id_producto.add(rs2.getInt("idproducto"));
-            price_item.add(rs2.getString("precio") + " CLP");
+            price_item.add(rs2.getString("precio") + " USD");
             oferta_item.add(rs2.getInt("oferta"));
             image.add(rs2.getString("imageFile"));
         }
