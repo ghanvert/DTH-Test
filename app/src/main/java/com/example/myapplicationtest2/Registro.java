@@ -1,18 +1,15 @@
 package com.example.myapplicationtest2;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,32 +19,22 @@ import java.sql.SQLException;
 
 public class Registro extends AppCompatActivity {
 
-    Button btn_registrarse;
-    EditText email, password, confirmar_password, nombre_persona;
-    static String _email, _password, _confirmar_password;
-
+    private EditText email, password, confirmar_password, nombre_persona;
     public boolean connection_state;
-
-    ProgressDialog mDialog;
+    private ProgressDialog mDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrarse);
 
-        btn_registrarse = (Button)findViewById(R.id.btn_registrarse);
-        email = (EditText)findViewById(R.id.registrar_email);
-        password = (EditText)findViewById(R.id.registrar_password);
-        confirmar_password = (EditText)findViewById(R.id.confirmar_password);
-        nombre_persona = (EditText)findViewById(R.id.nombre_persona);
+        Button btn_registrarse = findViewById(R.id.btn_registrarse);
+        email = findViewById(R.id.registrar_email);
+        password = findViewById(R.id.registrar_password);
+        confirmar_password = findViewById(R.id.confirmar_password);
+        nombre_persona = findViewById(R.id.nombre_persona);
 
-        btn_registrarse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Tasks().execute();
-            }
-        });
-
+        btn_registrarse.setOnClickListener(v -> new Tasks().execute());
     }
 
     public void Register(Connection cn) throws SQLException, NoSuchAlgorithmException {
@@ -55,20 +42,16 @@ public class Registro extends AppCompatActivity {
         boolean register_state;
 
         String table = "usuarios";
-        _email = email.getText().toString();
-        _password = password.getText().toString();
-        _confirmar_password = confirmar_password.getText().toString();
+        String _email = email.getText().toString();
+        String _password = password.getText().toString();
+        String _confirmar_password = confirmar_password.getText().toString();
         PreparedStatement pst = cn.prepareStatement("INSERT INTO " + table + " (email, password, nombre_persona) VALUES (?, ?, ?)");
         PreparedStatement pst2 = cn.prepareStatement("SELECT email FROM " + table + " WHERE email = '" + _email + "'");
         ResultSet rs2 = pst2.executeQuery();
-        if (rs2.next()) {
-            register_state = false;
-        } else {
-            register_state = true;
-        }
+        register_state = !rs2.next();
         rs2.close();
 
-        if (register_state == true) {
+        if (register_state) {
             if (_password.equals(_confirmar_password)) {
                 SHA256 sha256 = new SHA256(_email, _password);
                 pst.setString(1, _email);
@@ -87,6 +70,7 @@ public class Registro extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     class Tasks extends AsyncTask<Void, Void, Void> {
         protected Connection cn;
         @Override

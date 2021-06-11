@@ -1,5 +1,6 @@
 package com.example.myapplicationtest2;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.app.AlertDialog;
@@ -13,6 +14,7 @@ class LoadingProducts {
         activity = myActivity;
     }
 
+    @SuppressLint("InflateParams")
     void startLoadingDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 

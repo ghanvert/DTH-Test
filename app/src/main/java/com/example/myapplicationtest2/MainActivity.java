@@ -3,6 +3,7 @@ package com.example.myapplicationtest2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -27,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     EditText et_email, et_password;
 
     static boolean connection_state = false;
-    static Connection _connection = null;
 
     String email_ingresado;
     String password_ingresado;
@@ -39,38 +39,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        btn_iniciar_sesion = findViewById(R.id.btn_registrarse);
+        btn_registrarse = findViewById(R.id.registrarse);
+        et_email = findViewById(R.id.registrar_email);
+        et_password = findViewById(R.id.registrar_password);
 
-        btn_iniciar_sesion = (Button)findViewById(R.id.btn_registrarse);
-        btn_registrarse = (Button)findViewById(R.id.registrarse);
-        et_email = (EditText)findViewById(R.id.registrar_email);
-        et_password = (EditText)findViewById(R.id.registrar_password);
-
-        btn_iniciar_sesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                email_ingresado = et_email.getText().toString();
-                password_ingresado = et_password.getText().toString();
-                new Tasks().execute();
-            }
+        btn_iniciar_sesion.setOnClickListener(v -> {
+            email_ingresado = et_email.getText().toString();
+            password_ingresado = et_password.getText().toString();
+            new Tasks().execute();
         });
-        btn_registrarse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent next = new Intent(MainActivity.this, Registro.class);
-                startActivity(next);
-            }
+        btn_registrarse.setOnClickListener(v -> {
+            Intent next = new Intent(MainActivity.this, Registro.class);
+            startActivity(next);
         });
     }
 
-    protected void displayMessage(View view, String msg) {
+    protected void displayMessage(View view) {
         Snackbar.make(view, "Email y/o contraseña incorrectos", Snackbar.LENGTH_LONG)
                 .setActionTextColor(getResources().getColor(R.color.teal_700))
-                .setAction("Acción", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        // Do something special
-                        Log.i("Snackbar", "Snackbar pulsado.");
-                    }
+                .setAction("Acción", view1 -> {
+                    Log.i("Snackbar", "Snackbar pulsado.");
                 })
                 .show();
     }
@@ -90,8 +79,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        //SHA256 sha256 = new SHA256(password_ingresado);
-        //Log.e("PASSWORD", sha256.getText());
     }
 
     public void test(Connection cn) throws SQLException {
@@ -102,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("StaticFieldLeak")
     class Tasks extends AsyncTask<Void, Void, Void> {
         String error = "";
         protected Connection cn;
@@ -110,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
                 cn = DriverManager.getConnection("jdbc:mysql://remotemysql.com:3306/I6U9yGtbl0?user=I6U9yGtbl0&password=1Y5MgbI0EF");
-                //test(cn);
                 Login(cn);
                 connection_state = true;
             } catch (Exception e) {
@@ -128,9 +115,9 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             loadingDialog.dismissDialog();
-            if (connection_state == true) {
-                ConstraintLayout layout = (ConstraintLayout) findViewById(R.id.activity_main);
-                displayMessage(layout,"Email y/o contraseña incorrectos.");
+            if (connection_state) {
+                ConstraintLayout layout = findViewById(R.id.activity_main);
+                displayMessage(layout);
             }
         }
 

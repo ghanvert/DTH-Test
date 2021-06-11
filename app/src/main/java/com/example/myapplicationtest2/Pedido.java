@@ -13,7 +13,7 @@ public class Pedido {
         md.update(this.text.getBytes());
 
         byte[] digest = md.digest();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         for (byte b : digest) {
             sb.append(String.format("%02x", b & 0xff));

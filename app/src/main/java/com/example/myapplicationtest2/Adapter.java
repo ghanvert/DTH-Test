@@ -17,17 +17,15 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-    private Context context;
-    private LayoutInflater layoutInflater;
-    private List<String> data;
-    private List<Integer> id_producto;
-    private List<String> priceData;
-    private List<String> imageFile;
-    private List<Integer> ofertaData;
+    private final Context context;
+    private final LayoutInflater layoutInflater;
+    private final List<String> data;
+    private final List<Integer> id_producto;
+    private final List<String> priceData;
+    private final List<String> imageFile;
+    private final List<Integer> ofertaData;
 
-    Ventana_principal ventana_principal;
-
-    Adapter(Context context, List<Integer> id_producto, List<String> data, List<String> priceData, List<Integer> ofertaData, List<String> fileResource) {;
+    Adapter(Context context, List<Integer> id_producto, List<String> data, List<String> priceData, List<Integer> ofertaData, List<String> fileResource) {
         this.layoutInflater = LayoutInflater.from(context);
         this.id_producto = id_producto;
         this.data = data;
@@ -42,7 +40,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         View view = layoutInflater.inflate(R.layout.custom_card_view, viewGroup, false);
         return new ViewHolder(view);
-        // Añadido un comentario
     }
 
     @Override
@@ -60,16 +57,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         viewHolder.imageFile.setImageURI(path);
 
         Context _context = this.context;
-        viewHolder.cardview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                _context.startActivity(new Intent(_context, RealizarPedido.class));
-                Datos_Producto.id_producto = idProducto;
-                Datos_Producto.image_file = path;
-                Datos_Producto.nombre_producto = title;
-                Datos_Producto.precio = description;
-                Datos_Producto.image_file_name = image;
-            }
+        viewHolder.cardview.setOnClickListener(v -> {
+            _context.startActivity(new Intent(_context, RealizarPedido.class));
+            Datos_Producto.id_producto = idProducto;
+            Datos_Producto.image_file = path;
+            Datos_Producto.nombre_producto = title;
+            Datos_Producto.precio = description;
+            Datos_Producto.image_file_name = image;
         });
 
         if (oferta == 0) {
@@ -77,7 +71,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         } else if (oferta == 1) {
             viewHolder.oferta.setVisibility(View.VISIBLE);
         }
-
 
     }
 

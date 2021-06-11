@@ -15,10 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true"
-        tools:replace="android:allowBackup">
-        <activity android:name=".Firebase.Firebase"></activity>
+        tools:replace="android:allowBackup"
+        tools:targetApi="m">
+        <activity android:name=".Firebase.Firebase" />
         <activity android:name=".Pago" />
-        <activity android:name=".Payment.PaymentDetails" />
         <activity android:name=".Registro_Compras" />
         <activity android:name=".Ventana_principal" />
         <activity android:name=".RealizarPedido" />

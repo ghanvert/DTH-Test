@@ -18,7 +18,6 @@ import java.util.List;
 
 public class AdapterRegistroPedidos extends RecyclerView.Adapter<AdapterRegistroPedidos.ViewHolder> {
 
-    private final Context context;
     private final LayoutInflater layoutInflater;
     private final List<String> data;
     private final List<Integer> id_producto;
@@ -32,7 +31,6 @@ public class AdapterRegistroPedidos extends RecyclerView.Adapter<AdapterRegistro
         this.id_producto = id_producto;
         this.data = data;
         this.priceData = priceData;
-        this.context = context;
         this.aprobado = aprobado;
         this.imageFile = fileResource;
         this.idPedido = idPedido;

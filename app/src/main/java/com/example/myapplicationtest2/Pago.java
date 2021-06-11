@@ -1,21 +1,16 @@
 package com.example.myapplicationtest2;
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.braintreepayments.api.dropin.DropInActivity;
@@ -24,7 +19,6 @@ import com.braintreepayments.api.dropin.DropInResult;
 import com.braintreepayments.api.interfaces.HttpResponseCallback;
 import com.braintreepayments.api.internal.HttpClient;
 import com.braintreepayments.api.models.PaymentMethodNonce;
-
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -36,15 +30,16 @@ import java.util.Map;
 public class Pago extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 1234;
-    final String API_GET_TOKEN = "http://10.0.2.2/braintree/main.php";
-    final String API_CHECK_OUT = "http://10.0.2.2/braintree/checkout.php";
+    private static final String API_GET_TOKEN = "http://10.0.2.2/braintree/main.php";
+    private static final String API_CHECK_OUT = "http://10.0.2.2/braintree/checkout.php";
 
-    String token, amount;
-    HashMap<String, String> paramsHash;
+    private String token, amount;
+    private HashMap<String, String> paramsHash;
 
-    Button pagar;
-    ProgressDialog _mDialog;
+    private Button pagar;
+    private ProgressDialog _mDialog;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,13 +52,7 @@ public class Pago extends AppCompatActivity {
 
         new getToken().execute();
 
-        pagar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                submitPayment();
-            }
-        });
-
+        pagar.setOnClickListener(v -> submitPayment());
     }
 
     private void submitPayment() {
@@ -104,25 +93,17 @@ public class Pago extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(Pago.this);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, API_CHECK_OUT,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        if (response.toString().contains("Successful")) {
-                            Toast.makeText(Pago.this, "Transaction successful!", Toast.LENGTH_SHORT).show();
-                            new Tasks().execute();
-                        } else {
-                            Toast.makeText(Pago.this, "Transaction failed!", Toast.LENGTH_SHORT).show();
-                        }
-                        Log.d("EDMT_ERROR", response.toString());
+                response -> {
+                    if (response.contains("Successful")) {
+                        Toast.makeText(Pago.this, "Transaction successful!", Toast.LENGTH_SHORT).show();
+                        new Tasks().execute();
+                    } else {
+                        Toast.makeText(Pago.this, "Transaction failed!", Toast.LENGTH_SHORT).show();
                     }
-                }, new Response.ErrorListener() {
+                    Log.d("EDMT_ERROR", response);
+                }, error -> Log.d("EDMT_ERROR", error.toString())) {
             @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("EDMT_ERROR", error.toString());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 if (paramsHash == null) {
                     return null;
                 }
@@ -134,15 +115,13 @@ public class Pago extends AppCompatActivity {
             }
 
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
+            public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/x-www-form-urlencoded");
                 return params;
             }
         };
-
         queue.add(stringRequest);
-
     }
 
     public void MandarPedido(Connection cn) throws SQLException, NoSuchAlgorithmException {
@@ -168,8 +147,6 @@ public class Pago extends AppCompatActivity {
         Pedido _pedido = new Pedido(usuario_email, id_producto, cantidad, precio_total);
         pedido = _pedido.getText();
 
-        String table = "pedidos";
-        String datos = " (id_pedido, id_producto, nombre_producto, usuario_email, nombre_persona_recibe, precio_producto, cantidad, precio_total, domicilio_entrega, telefono)";
         PreparedStatement pst = cn.prepareStatement("INSERT INTO `I6U9yGtbl0`.`pedidos` (`pedido`, `id_producto`, `nombre_producto`, `usuario_email`, `nombre_persona_recibe`, `precio_producto`, `cantidad`, `precio_total`, `domicilio_entrega`, `telefono`, `imageFile`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);");
         pst.setString(1, pedido);
         pst.setInt(2, id_producto);
@@ -184,9 +161,9 @@ public class Pago extends AppCompatActivity {
         pst.setString(11, image);
 
         pst.executeUpdate();
-
     }
 
+    @SuppressLint("StaticFieldLeak")
     class Tasks extends AsyncTask<Void, Void, Void> {
         protected Connection cn;
         @Override
@@ -217,6 +194,7 @@ public class Pago extends AppCompatActivity {
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     class getToken extends AsyncTask<Void, Void, Void> {
 
         ProgressDialog mDialog;
@@ -235,12 +213,7 @@ public class Pago extends AppCompatActivity {
             client.get(API_GET_TOKEN, new HttpResponseCallback() {
                 @Override
                 public void success(String responseBody) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            token = responseBody;
-                        }
-                    });
+                    runOnUiThread(() -> token = responseBody);
                 }
 
                 @Override

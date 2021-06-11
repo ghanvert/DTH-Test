@@ -6,7 +6,6 @@ public class Datos_Producto {
 
     public static String nombre_producto = "";
     public static String precio = "";
-    public static String nombre = "";
     public static String domicilio_entrega = "";
     public static String telefono = "";
     public static int id_producto = 0;
