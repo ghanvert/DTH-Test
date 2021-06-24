@@ -55,6 +55,10 @@ public class Ventana_principal extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), Registro_Compras.class));
                     overridePendingTransition(0,0);
                     return true;
+                case R.id.cuenta:
+                    startActivity(new Intent(getApplicationContext(), ConfigCuenta.class));
+                    overridePendingTransition(0,0);
+                    return true;
             }
             return false;
         });

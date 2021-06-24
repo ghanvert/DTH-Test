@@ -53,6 +53,11 @@ public class Registro_Compras extends AppCompatActivity {
                 case R.id.compras:
                     new Tasks().execute();
                     return true;
+                case R.id.cuenta:
+                    startActivity(new Intent(getApplicationContext(), ConfigCuenta.class));
+                    overridePendingTransition(0,0);
+                    timer.cancel();
+                    return true;
             }
             return false;
         });

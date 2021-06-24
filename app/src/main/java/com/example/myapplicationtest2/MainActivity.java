@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
             ResultSet rs = pst.executeQuery();
             if (rs.next()) {
                 Datos_Usuario.email = et_email.getText().toString();
+                saveDatosUsuario(cn);
                 Intent next = new Intent(MainActivity.this, Ventana_principal.class);
                 startActivity(next);
             }
@@ -87,6 +88,17 @@ public class MainActivity extends AppCompatActivity {
         if (rs.next()) {
             Log.d("STATE", rs.getString(1));
         }
+    }
+
+    public void saveDatosUsuario(Connection cn) throws SQLException {
+        PreparedStatement pst = cn.prepareStatement("SELECT * FROM usuarios WHERE email = '" + Datos_Usuario.email + "'");
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            Datos_Usuario.nombre = rs.getString("nombre_persona");
+            Datos_Usuario.direccion = rs.getString("direccion");
+            Datos_Usuario.telefono = rs.getString("telefono");
+        }
+        rs.close();
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -106,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
-
         @Override
         protected void onPreExecute() {
             loadingDialog.startLoadingDialog();

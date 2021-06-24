@@ -17,6 +17,8 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
         tools:targetApi="m">
+        <activity android:name=".CambiarDatos"></activity>
+        <activity android:name=".ConfigCuenta" />
         <activity android:name=".Firebase.Firebase" />
         <activity android:name=".Pago" />
         <activity android:name=".Registro_Compras" />

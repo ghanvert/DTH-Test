@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CambiarDatos">
+
+    <EditText
+        android:id="@+id/cambiarDireccion"
+        android:layout_width="286dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="39dp"
+        android:ems="10"
+        android:hint="Dirección"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cambiarNombre" />
+
+    <EditText
+        android:id="@+id/cambiarTelefono"
+        android:layout_width="286dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="39dp"
+        android:ems="10"
+        android:hint="Teléfono"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cambiarDireccion" />
+
+    <EditText
+        android:id="@+id/cambiarNombre"
+        android:layout_width="286dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="119dp"
+        android:ems="10"
+        android:hint="Nombre"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnIngresarNuevosDatos"
+        android:layout_width="201dp"
+        android:layout_height="44dp"
+        android:layout_marginTop="72dp"
+        android:text="Cambiar datos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cambiarTelefono" />
+</androidx.constraintlayout.widget.ConstraintLayout>
