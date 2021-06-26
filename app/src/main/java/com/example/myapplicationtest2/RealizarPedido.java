@@ -2,6 +2,7 @@ package com.example.myapplicationtest2;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 public class RealizarPedido extends AppCompatActivity {
 
     private TextView nombre_producto, precio, total;
@@ -19,6 +22,7 @@ public class RealizarPedido extends AppCompatActivity {
     private ImageView image;
     private static int _precio_total = 0;
 
+    @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +46,24 @@ public class RealizarPedido extends AppCompatActivity {
             Datos_Producto.nombre_producto = nombre_producto.getText().toString();
             Datos_Producto.nombre_persona_recibe = nombre.getText().toString();
             Datos_Producto.domicilio_entrega = domicilio_entrega.getText().toString();
-            startActivity(new Intent(getApplicationContext(), Pago.class));
+
+            if (Datos_Producto.nombre_persona_recibe.equalsIgnoreCase("") && !Datos_Usuario.nombre.equalsIgnoreCase("")) {
+                Datos_Producto.nombre_persona_recibe = Datos_Usuario.nombre;
+            }
+            if (Datos_Producto.telefono.equalsIgnoreCase("") && !Datos_Usuario.telefono.equalsIgnoreCase("")) {
+                Datos_Producto.telefono = Datos_Usuario.telefono;
+            }
+            if (Datos_Producto.domicilio_entrega.equalsIgnoreCase("") && !Datos_Usuario.direccion.equalsIgnoreCase("")) {
+                Datos_Producto.domicilio_entrega = Datos_Usuario.direccion;
+            }
+
+            if (Datos_Producto.cantidad == 0 || Datos_Producto.cantidad > 99) {
+                Snackbar.make(findViewById(R.layout.activity_realizar_pedido), "Ingrese una cantidad válida, porfavor.", Snackbar.LENGTH_LONG)
+                        .setActionTextColor(getResources().getColor(R.color.teal_700))
+                        .show();
+            } else {
+                startActivity(new Intent(getApplicationContext(), Pago.class));
+            }
         });
 
         cantidad.addTextChangedListener(new TextWatcher() {

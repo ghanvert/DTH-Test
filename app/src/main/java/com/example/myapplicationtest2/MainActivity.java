@@ -58,9 +58,6 @@ public class MainActivity extends AppCompatActivity {
     protected void displayMessage(View view) {
         Snackbar.make(view, "Email y/o contraseña incorrectos", Snackbar.LENGTH_LONG)
                 .setActionTextColor(getResources().getColor(R.color.teal_700))
-                .setAction("Acción", view1 -> {
-                    Log.i("Snackbar", "Snackbar pulsado.");
-                })
                 .show();
     }
 

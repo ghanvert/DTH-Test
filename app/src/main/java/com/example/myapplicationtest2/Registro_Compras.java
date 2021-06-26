@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -31,6 +32,8 @@ public class Registro_Compras extends AppCompatActivity {
 
     private Timer timer;
     private TimerTask task;
+
+    //private final LoadingPedidos loadingPedidos = new LoadingPedidos(Registro_Compras.this);
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -140,7 +143,7 @@ public class Registro_Compras extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            //loadingDialog.startLoadingDialog();
+            //loadingPedidos.startLoadingDialog();
         }
 
         @Override
@@ -151,6 +154,7 @@ public class Registro_Compras extends AppCompatActivity {
             AdapterRegistroPedidos adapterRegistroPedidos = null;
             adapterRegistroPedidos = new AdapterRegistroPedidos(Registro_Compras.this, id_producto, items, price_item, aprobado, image, idPedido);
             recyclerView.setAdapter(adapterRegistroPedidos);
+            //loadingPedidos.dismissDialog();
         }
     }
 }

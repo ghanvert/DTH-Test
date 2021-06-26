@@ -1,13 +1,17 @@
 package com.example.myapplicationtest2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -33,7 +37,6 @@ public class CambiarDatos extends AppCompatActivity {
         btnCambiarDatos.setOnClickListener(v -> {
             new Tasks().execute();
         });
-
     }
 
     private void cambiarDatos(Connection cn) throws SQLException {
@@ -44,11 +47,15 @@ public class CambiarDatos extends AppCompatActivity {
         nuevaDireccion = Datos_Usuario.direccion;
         nuevoTelefono = Datos_Usuario.telefono;
 
+        int state = 0;
+
         if (cambiarNombre.getText().toString().equals("")) {
             // Mantener nombre
             nuevoNombre = Datos_Usuario.nombre;
         } else if (!(cambiarNombre.getText().toString().length() < 3)) {
             nuevoNombre = cambiarNombre.getText().toString();
+        } else {
+            state =+ 1;
         }
 
         if (cambiarDireccion.getText().toString().equals("")) {
@@ -56,6 +63,8 @@ public class CambiarDatos extends AppCompatActivity {
             nuevaDireccion = Datos_Usuario.direccion;
         } else if (!(cambiarDireccion.getText().toString().length() < 6)) {
             nuevaDireccion = cambiarDireccion.getText().toString();
+        } else {
+            state =+ 1;
         }
 
         if (cambiarTelefono.getText().toString().equals("")) {
@@ -63,22 +72,42 @@ public class CambiarDatos extends AppCompatActivity {
             nuevoTelefono = Datos_Usuario.telefono;
         } else if (!(cambiarTelefono.getText().toString().length() < 9)) {
             nuevoTelefono = cambiarTelefono.getText().toString();
+        } else {
+            state =+ 1;
         }
 
-        PreparedStatement pst = cn.prepareStatement("UPDATE usuarios SET nombre_persona = '" + nuevoNombre + "', "
-                                                        + "direccion = '" + nuevaDireccion + "', telefono = '" + nuevoTelefono + "' " +
-                                                          "WHERE email = '" + Datos_Usuario.email + "'");
-        pst.executeUpdate();
+        if (state > 0) {
+            ConstraintLayout layout = findViewById(R.id.activity_cambiar_datos);
+            Snackbar.make(layout, "Porfavor, inserte los datos correctos.", Snackbar.LENGTH_LONG)
+                    .setActionTextColor(getResources().getColor(R.color.teal_700))
+                    .show();
+        } else {
+            PreparedStatement pst = cn.prepareStatement("UPDATE usuarios SET nombre_persona = '" + nuevoNombre + "', "
+                    + "direccion = '" + nuevaDireccion + "', telefono = '" + nuevoTelefono + "' " +
+                    "WHERE email = '" + Datos_Usuario.email + "'");
+            pst.executeUpdate();
 
-        Datos_Usuario.nombre = nuevoNombre;
-        Datos_Usuario.telefono = nuevoTelefono;
-        Datos_Usuario.direccion = nuevaDireccion;
+            Datos_Usuario.nombre = nuevoNombre;
+            Datos_Usuario.telefono = nuevoTelefono;
+            Datos_Usuario.direccion = nuevaDireccion;
 
-        startActivity(new Intent(getApplicationContext(), ConfigCuenta.class));
+            startActivity(new Intent(getApplicationContext(), ConfigCuenta.class));
+        }
+
     }
 
     class Tasks extends AsyncTask<Void, Void, Void> {
         protected Connection cn;
+        ProgressDialog mDialog;
+
+        @Override
+        protected void onPreExecute() {
+            mDialog = new ProgressDialog(CambiarDatos.this, android.R.style.Theme_DeviceDefault_Dialog);
+            mDialog.setCancelable(false);
+            mDialog.setMessage("Actualizando datos");
+            mDialog.show();
+        }
+
         @Override
         protected Void doInBackground(Void... voids) {
             try {
@@ -89,6 +118,11 @@ public class CambiarDatos extends AppCompatActivity {
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            mDialog.dismiss();
         }
     }
 

@@ -34,10 +34,8 @@ public class ConfigCuenta extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_config_cuenta);
 
-        //new Tasks().execute();
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationMenu);
-        bottomNavigationView.setSelectedItemId(R.id.compras);
+        bottomNavigationView.setSelectedItemId(R.id.cuenta);
         bottomNavigationView.setItemIconTintList(null);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -47,6 +45,7 @@ public class ConfigCuenta extends AppCompatActivity {
                     return true;
                 case R.id.compras:
                     startActivity(new Intent(getApplicationContext(), Registro_Compras.class));
+                    overridePendingTransition(0,0);
                     return true;
                 case R.id.cuenta:
                     return true;

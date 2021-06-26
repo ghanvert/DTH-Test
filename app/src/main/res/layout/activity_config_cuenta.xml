@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:design="http://schemas.android.com/apk/res-auto"
     tools:context=".ConfigCuenta">
 
     <TextView
@@ -89,5 +90,21 @@
         android:text="direccion"
         app:layout_constraintStart_toEndOf="@+id/txtDireccion"
         app:layout_constraintTop_toBottomOf="@+id/_telefono" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:addStatesFromChildren="false"
+        android:background="@color/teal_700"
+        app:backgroundTint="#009688"
+        app:elevation="10dp"
+        app:itemIconTint="@color/black"
+        app:itemRippleColor="#FFFFFF"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        design:menu="@menu/menu_navigation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
