@@ -1,4 +1,5 @@
 package com.example.myapplicationtest2;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,6 +20,9 @@ import com.braintreepayments.api.dropin.DropInResult;
 import com.braintreepayments.api.interfaces.HttpResponseCallback;
 import com.braintreepayments.api.internal.HttpClient;
 import com.braintreepayments.api.models.PaymentMethodNonce;
+import com.example.myapplicationtest2.Datos.Datos_Producto;
+import com.example.myapplicationtest2.Datos.Datos_Usuario;
+
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -30,13 +34,14 @@ import java.util.Map;
 public class Pago extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 1234;
-    private static final String API_GET_TOKEN = "http://10.0.2.2/braintree/main.php";
-    private static final String API_CHECK_OUT = "http://10.0.2.2/braintree/checkout.php";
+    //private static final String API_GET_TOKEN = "http://10.0.2.2/braintree/main.php";
+    //private static final String API_CHECK_OUT = "http://10.0.2.2/braintree/checkout.php";
+    private static final String API_GET_TOKEN = "http://192.168.1.83/braintree/main.php";
+    private static final String API_CHECK_OUT = "http://192.168.1.83/braintree/checkout.php";
 
     private String token, amount;
     private HashMap<String, String> paramsHash;
 
-    private Button pagar;
     private ProgressDialog _mDialog;
 
     @SuppressLint("SetTextI18n")
@@ -46,7 +51,7 @@ public class Pago extends AppCompatActivity {
         setContentView(R.layout.activity_payment);
 
         amount = String.valueOf(Datos_Producto.precio_total);
-        pagar = findViewById(R.id.pagar);
+        Button pagar = findViewById(R.id.pagar);
 
         pagar.setText(amount + " USD");
 

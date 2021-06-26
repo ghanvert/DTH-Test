@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.myapplicationtest2.Datos.Datos_Usuario;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.security.NoSuchAlgorithmException;
@@ -100,7 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     class Tasks extends AsyncTask<Void, Void, Void> {
-        String error = "";
         protected Connection cn;
         @Override
         protected Void doInBackground(Void... voids) {

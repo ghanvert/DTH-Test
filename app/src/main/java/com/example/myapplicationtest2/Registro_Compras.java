@@ -4,12 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+
+import com.example.myapplicationtest2.Datos.Datos_Usuario;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -31,9 +32,8 @@ public class Registro_Compras extends AppCompatActivity {
     private ArrayList<String> idPedido;
 
     private Timer timer;
-    private TimerTask task;
 
-    //private final LoadingPedidos loadingPedidos = new LoadingPedidos(Registro_Compras.this);
+    private static final int FRECUENCIA = 6000;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -77,7 +77,7 @@ public class Registro_Compras extends AppCompatActivity {
         final Handler handler = new Handler();
         timer = new Timer();
 
-        task = new TimerTask() {
+        TimerTask task = new TimerTask() {
             @Override
             public void run() {
                 handler.post(() -> {
@@ -97,7 +97,7 @@ public class Registro_Compras extends AppCompatActivity {
                 });
             }
         };
-        timer.schedule(task, 0, 6000);
+        timer.schedule(task, 0, FRECUENCIA);
     }
 
     public void descargarPedidos(Connection cn) throws SQLException {
@@ -117,8 +117,6 @@ public class Registro_Compras extends AppCompatActivity {
             image.add(rs.getString("imageFile"));
             id_producto.add(rs.getInt("id_producto"));
             aprobado.add(rs.getInt("aprobado"));
-            Log.d("Entrando", "A AGREGAR...");
-            Log.d("Agregando", String.valueOf(rs.getInt("aprobado")));
             price_item.add(rs.getString("precio_producto"));
             idPedido.add(rs.getString("pedido"));
         }
@@ -133,7 +131,7 @@ public class Registro_Compras extends AppCompatActivity {
         protected Void doInBackground(Void... voids) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                Connection cn = DriverManager.getConnection("jdbc:mysql://remotemysql.com:3306/I6U9yGtbl0?user=I6U9yGtbl0&password=1Y5MgbI0EF");
+                Connection cn = DriverManager.getConnection("jdbc:mysql://remotemysql.com:3306/I6U9yGtbl0?user=I6U9yGtbl0&password=1Y5MgbI0EF&useSSL=false");
                 descargarPedidos(cn);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -142,19 +140,13 @@ public class Registro_Compras extends AppCompatActivity {
         }
 
         @Override
-        protected void onPreExecute() {
-            //loadingPedidos.startLoadingDialog();
-        }
-
-        @Override
         protected void onPostExecute(Void aVoid) {
             recyclerView = null;
             recyclerView = findViewById(R.id.recyclerViewPedidos);
             recyclerView.setLayoutManager(new LinearLayoutManager(Registro_Compras.this));
-            AdapterRegistroPedidos adapterRegistroPedidos = null;
+            AdapterRegistroPedidos adapterRegistroPedidos;
             adapterRegistroPedidos = new AdapterRegistroPedidos(Registro_Compras.this, id_producto, items, price_item, aprobado, image, idPedido);
             recyclerView.setAdapter(adapterRegistroPedidos);
-            //loadingPedidos.dismissDialog();
         }
     }
 }

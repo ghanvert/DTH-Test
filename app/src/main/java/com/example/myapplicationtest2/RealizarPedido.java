@@ -2,7 +2,6 @@ package com.example.myapplicationtest2;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.myapplicationtest2.Datos.Datos_Producto;
+import com.example.myapplicationtest2.Datos.Datos_Usuario;
 import com.google.android.material.snackbar.Snackbar;
 
 public class RealizarPedido extends AppCompatActivity {

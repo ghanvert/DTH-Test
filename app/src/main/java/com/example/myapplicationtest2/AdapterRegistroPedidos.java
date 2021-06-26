@@ -1,5 +1,6 @@
 package com.example.myapplicationtest2;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
@@ -43,6 +44,7 @@ public class AdapterRegistroPedidos extends RecyclerView.Adapter<AdapterRegistro
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
 
@@ -60,13 +62,10 @@ public class AdapterRegistroPedidos extends RecyclerView.Adapter<AdapterRegistro
 
         viewHolder.imageFile.setImageURI(path);
 
-        Log.e("VALOR", String.valueOf(aprobado));
         if (aprobado == 1) {
-            Log.d("ENTRANDO", "HOLAAA");
             viewHolder.aprobado.setText("EN CAMINO");
             viewHolder.aprobado.setTextColor(Color.GREEN);
         } else {
-            Log.d("ENTRANDO", "HOLUU");
             viewHolder.aprobado.setText("EN ESPERA");
             viewHolder.aprobado.setTextColor(Color.RED);
         }

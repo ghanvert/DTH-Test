@@ -19,7 +19,6 @@ import java.util.ArrayList;
 
 public class Ventana_principal extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
     private ArrayList<String> items;
     private ArrayList<Integer> id_producto;
     private ArrayList<String> price_item;
@@ -33,13 +32,6 @@ public class Ventana_principal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_principal);
-
-        recyclerView = findViewById(R.id.recyclerView);
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setItemViewCacheSize(20);
-        recyclerView.setDrawingCacheEnabled(true);
-        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationMenu);
         bottomNavigationView.setSelectedItemId(R.id.inicio);
@@ -120,7 +112,13 @@ public class Ventana_principal extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            recyclerView = findViewById(R.id.recyclerView);
+            RecyclerView recyclerView = findViewById(R.id.recyclerView);
+
+            recyclerView.setHasFixedSize(true);
+            recyclerView.setItemViewCacheSize(20);
+            recyclerView.setDrawingCacheEnabled(true);
+            recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
             recyclerView.setLayoutManager(new LinearLayoutManager(Ventana_principal.this));
             recyclerView.addItemDecoration(new HorizontalDividerItemDecoration.Builder(Ventana_principal.this).build());
             Adapter adapter = new Adapter(Ventana_principal.this, id_producto, items, price_item, oferta_item, image);

@@ -3,25 +3,24 @@ package com.example.myapplicationtest2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.myapplicationtest2.Datos.Datos_Usuario;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CambiarDatos extends AppCompatActivity {
 
-    private Button btnCambiarDatos;
     private EditText cambiarNombre, cambiarDireccion, cambiarTelefono;
 
     @Override
@@ -29,14 +28,12 @@ public class CambiarDatos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cambiar_datos);
 
-        btnCambiarDatos = findViewById(R.id.btnIngresarNuevosDatos);
+        Button btnCambiarDatos = findViewById(R.id.btnIngresarNuevosDatos);
         cambiarNombre = findViewById(R.id.cambiarNombre);
         cambiarDireccion = findViewById(R.id.cambiarDireccion);
         cambiarTelefono = findViewById(R.id.cambiarTelefono);
 
-        btnCambiarDatos.setOnClickListener(v -> {
-            new Tasks().execute();
-        });
+        btnCambiarDatos.setOnClickListener(v -> new Tasks().execute());
     }
 
     private void cambiarDatos(Connection cn) throws SQLException {
@@ -96,6 +93,7 @@ public class CambiarDatos extends AppCompatActivity {
 
     }
 
+    @SuppressLint("StaticFieldLeak")
     class Tasks extends AsyncTask<Void, Void, Void> {
         protected Connection cn;
         ProgressDialog mDialog;
