@@ -5,13 +5,14 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.myapplicationtest2.Datos.Datos_Usuario;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -66,10 +67,16 @@ public class Registro extends AppCompatActivity {
                 Intent next = new Intent(Registro.this, Ventana_principal.class);
                 startActivity(next);
             } else {
-                Log.e("ERROR", "Contraseñas no son iguales.");
+                ConstraintLayout layout = findViewById(R.id.activity_registro);
+                Snackbar.make(layout, "Las contraseñas son distintas.", Snackbar.LENGTH_LONG)
+                        .setActionTextColor(getResources().getColor(R.color.teal_700))
+                        .show();
             }
         } else {
-            Log.e("ERROR", "El usuario especificado ya se encuentra registrado.");
+            ConstraintLayout layout = findViewById(R.id.activity_registro);
+            Snackbar.make(layout, "El usuario ya existe.", Snackbar.LENGTH_LONG)
+                    .setActionTextColor(getResources().getColor(R.color.teal_700))
+                    .show();
         }
     }
 
