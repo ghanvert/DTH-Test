@@ -26,10 +26,10 @@ de una forma segura.
 __PROGRESO__  
 * ![progress2](https://progress-bar.dev/100) Integración métodos de pago
 * ![progress3](https://progress-bar.dev/100) Productos
-* ![progress5](https://progress-bar.dev/98) App administración
-* ![progress4](https://progress-bar.dev/70) Pedidos
+* ![progress5](https://progress-bar.dev/100) App administración
+* ![progress4](https://progress-bar.dev/100) Pedidos
 * Integración servidor con Firebase (CANCELADO).
-* ![progress6](https://progress-bar.dev/10) Otros sistemas secundarios (extras)  
+* ![progress6](https://progress-bar.dev/100) Otros sistemas secundarios (extras)  
 
 
 
